@@ -28,8 +28,8 @@ def __dir__(self:MetaData,                  old_f): return old_f(self) + list(se
 
 @patch
 def __getattr__(self:MetaData, n):
-    if n is None: raise AttributeError
-    res = Table(n, self, autoload=True)
+    if n is None or n not in self.tables: raise AttributeError
+    res = self.tables[n]
     return res,res.c
 
 @patch
