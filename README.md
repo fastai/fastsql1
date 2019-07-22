@@ -40,7 +40,18 @@ The collection of columns supports tab completion too.
 uc.billingAddress
 ```
 
-Get a data frame, with optional `where` clause and `limit`.
+Get a data frame, with optional `where` clause and `limit`, with the `df` method on either `Table` or `MetaData`.
 ```
-u.df(where=uc.email.startswith('j'), limit=10)
+# These are equivalent
+u.df(where=uc.email.startswith('j'), limit=1)
+db.df(u.select(uc.email.startswith('j'), limit=1))
 ```
+
+You can also pass SQL statements directly.
+```
+# returns a DataFrame
+db.sql("select count(*) from User")
+# returns None
+db.sql("insert into User select * from User where email = 'xxx'")
+```
+
