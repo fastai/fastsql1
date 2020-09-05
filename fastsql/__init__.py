@@ -1,3 +1,4 @@
+from fastcore.all import *
 import sqlalchemy, pandas as pd
 from sqlalchemy import create_engine,MetaData,Table,Column,engine,sql
 from sqlalchemy.sql.base import ImmutableColumnCollection
@@ -11,14 +12,6 @@ def conn_db(drivername, username=None, password=None, host=None, port=None, data
     meta = MetaData(bind=eng)
     meta.reflect()
     return meta
-
-def patch(f):
-    "Decorator to patch `f` into class of f's first param type annotation"
-    cls = next(iter(f.__annotations__.values()))
-    old_f = getattr(cls, f.__name__, None)
-    def _f(o, *a, **k): return f(o, old_f, *a, **k) if old_f else f(o, *a, **k)
-    setattr(cls,f.__name__,_f)
-    return f
 
 @patch
 def __getattr__(self:MetaData, n):

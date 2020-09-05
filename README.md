@@ -5,7 +5,7 @@ A bit of extra usability for sqlalchemy.
 ### Install
 
 ```bash
-pip install git+https://github.com/jph00/fastsql
+pip install fastsql
 ```
 
 ### Usage examples
