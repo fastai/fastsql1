@@ -1,0 +1,9 @@
+project:
+  output-dir: _docs
+
+website:
+  title: "fastsql"
+  site-url: "https://fastai.github.io/fastsql"
+  description: "A bit of extra usability for sqlalchemy v2."
+  repo-branch: master
+  repo-url: "https://github.com/fastai/fastsql"
