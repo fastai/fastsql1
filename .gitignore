@@ -1,3 +1,5 @@
+*.bak
+conda/
 *.sqlite
 *.db
 _proc/

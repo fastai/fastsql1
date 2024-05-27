@@ -69,7 +69,7 @@ def get(self:Table, where=None, limit=None):
     "Select from table, optionally limited by `where` and `limit` clauses"
     return self.metadata.conn.sql(self.select().where(where).limit(limit))
 
-# %% ../nbs/00_core.ipynb 15
+# %% ../nbs/00_core.ipynb 17
 @patch
 def close(self:MetaData):
     "Close the connection"
