@@ -1,0 +1,42 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "fastsql",
+    "section": "",
+    "text": "A bit of extra usability for sqlalchemy v2.",
+    "crumbs": [
+      "fastsql"
+    ]
+  },
+  {
+    "objectID": "index.html#install",
+    "href": "index.html#install",
+    "title": "fastsql",
+    "section": "Install",
+    "text": "Install\npip install fastsql",
+    "crumbs": [
+      "fastsql"
+    ]
+  },
+  {
+    "objectID": "index.html#example",
+    "href": "index.html#example",
+    "title": "fastsql",
+    "section": "Example",
+    "text": "Example\nThis little library provides a single function, conn_db, which returns an extended sqlalchemy MetaData object which you can use for accessing your database with full dynamic autocomplete support in Jupyter and IPython. So it’s particularly useful for interactive development.\nWe demonstrate it here using the ‘chinook’ sample database.\n\nfrom fastsql import conn_db\nfrom fastcore.utils import *\n\n\nurl = 'https://github.com/lerocha/chinook-database/raw/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite'\npath = Path('chinook.sqlite')\nif not path.exists(): urlsave(url, path)\n\n\nconnstr = f\"sqlite:///{path}\"\ndb = conn_db(connstr)\n\n\n' '.join(db.tables)\n\n'Album Artist Customer Employee Genre Invoice InvoiceLine Track MediaType Playlist PlaylistTrack'\n\n\n\na = db.Album\n\n\nlist(a.c)\n\n[Column('AlbumId', INTEGER(), table=&lt;Album&gt;, primary_key=True, nullable=False),\n Column('Title', NVARCHAR(length=160), table=&lt;Album&gt;, nullable=False),\n Column('ArtistId', INTEGER(), ForeignKey('Artist.ArtistId'), table=&lt;Album&gt;, nullable=False)]\n\n\nRows are returned as named tuples.\n\nrs = db.sql('select AlbumId,Title from Album')\nrs[0]\n\nRow(AlbumId=1, Title='For Those About To Rock We Salute You')\n\n\n\na.get(a.c.Title.startswith('F'), limit=5)\n\n[Row(AlbumId=1, Title='For Those About To Rock We Salute You', ArtistId=1),\n Row(AlbumId=7, Title='Facelift', ArtistId=5),\n Row(AlbumId=60, Title='Fireball', ArtistId=58),\n Row(AlbumId=88, Title='Faceless', ArtistId=87),\n Row(AlbumId=99, Title='Fear Of The Dark', ArtistId=90)]\n\n\nThis is the query that ran behind the scenes:\n\nprint(a.select().where(a.c.Title.startswith('F')).limit(5))\n\nSELECT \"Album\".\"AlbumId\", \"Album\".\"Title\", \"Album\".\"ArtistId\" \nFROM \"Album\" \nWHERE (\"Album\".\"Title\" LIKE :Title_1 || '%')\n LIMIT :param_1\n\n\n\ndb.close()",
+    "crumbs": [
+      "fastsql"
+    ]
+  },
+  {
+    "objectID": "core.html",
+    "href": "core.html",
+    "title": "Core",
+    "section": "",
+    "text": "url = 'https://github.com/lerocha/chinook-database/raw/master/ChinookDatabase/DataSources/Chinook_Sqlite.sqlite'\npath = Path('chinook.sqlite')\nif not path.exists(): urlsave(url, path)\n\n\nconnstr = f\"sqlite:///{path}\"\n\n\nsource\n\nconn_db\n\n conn_db (connstr, **kwargs)\n\nConnect to DB using url.URL() params and return filled MetaData\n\ndb = conn_db(connstr)\n\n\nsource\n\n\nReadOnlyColumnCollection.__dir__\n\n ReadOnlyColumnCollection.__dir__ ()\n\nDefault dir() implementation.\n\nsource\n\n\nMetaData.__dir__\n\n MetaData.__dir__ ()\n\nDefault dir() implementation.\n\n' '.join(db.tables)\n\n'Album Artist Customer Employee Genre Invoice InvoiceLine Track MediaType Playlist PlaylistTrack'\n\n\n\na = db.Album\n\n\nlist(a.c)\n\n[Column('AlbumId', INTEGER(), table=&lt;Album&gt;, primary_key=True, nullable=False),\n Column('Title', NVARCHAR(length=160), table=&lt;Album&gt;, nullable=False),\n Column('ArtistId', INTEGER(), ForeignKey('Artist.ArtistId'), table=&lt;Album&gt;, nullable=False)]\n\n\n\nsource\n\n\nMetaData.sql\n\n MetaData.sql (statement, *args, **kwargs)\n\nExecute statement string and return DataFrame of results (if any)\n\nsource\n\n\nConnection.sql\n\n Connection.sql (statement, nm='Row', *args, **kwargs)\n\nExecute statement string and return results (if any)\n\nsource\n\n\nCursorResult.tuples\n\n CursorResult.tuples (nm='Row')\n\nGet all results as named tuples\n\nrs = db.sql('select AlbumId,Title from Album')\nrs[0]\n\nRow(AlbumId=1, Title='For Those About To Rock We Salute You')\n\n\n\nsource\n\n\nTable.get\n\n Table.get (where=None, limit=None)\n\nSelect from table, optionally limited by where and limit clauses\n\na.get(a.c.Title.startswith('F'), limit=5)\n\n[Row(AlbumId=1, Title='For Those About To Rock We Salute You', ArtistId=1),\n Row(AlbumId=7, Title='Facelift', ArtistId=5),\n Row(AlbumId=60, Title='Fireball', ArtistId=58),\n Row(AlbumId=88, Title='Faceless', ArtistId=87),\n Row(AlbumId=99, Title='Fear Of The Dark', ArtistId=90)]\n\n\nThis is the query that will run behind the scenes:\n\nprint(a.select().where(a.c.Title.startswith('F')).limit(5))\n\nSELECT \"Album\".\"AlbumId\", \"Album\".\"Title\", \"Album\".\"ArtistId\" \nFROM \"Album\" \nWHERE (\"Album\".\"Title\" LIKE :Title_1 || '%')\n LIMIT :param_1\n\n\n\nsource\n\n\nMetaData.close\n\n MetaData.close ()\n\nClose the connection\n\ndb.close()",
+    "crumbs": [
+      "Core"
+    ]
+  }
+]
